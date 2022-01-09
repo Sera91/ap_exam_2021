@@ -79,7 +79,7 @@ class _iterator {
    }
    //get_index() method:
    // returns the "address" of the node in the pool
-   N get_index() const {return index_node;}
+   N get_index() const noexcept {return index_node;}
 
    friend bool operator==(const _iterator& x, const _iterator& y) {
       return x.index_node == y.index_node;
@@ -108,9 +108,6 @@ class list_pool{
   node_t& node(list_type x) noexcept { return pool[x-1]; }
   const node_t& node(list_type x) const noexcept { return pool[x-1]; }
 
-/*node_t& node(list_type x) noexcept { return pool.at(x-1); }
-  const node_t& node(list_type x) const noexcept { return pool.at(x-1); }
-*/
  
  public:
   // list_pool() {*this = list_pool(0);};
@@ -121,12 +118,12 @@ class list_pool{
   //Some constructors and operators useful to copy the vector pool, with all the linked lists inside:
 
   //move constructor
-  list_pool(list_pool&& src) :pool{std::move(src.pool)}{
+  list_pool(list_pool&& src) noexcept :pool{std::move(src.pool)}{
         std::cout<<"Move constructor "<<std::endl;
   }
 
   //move assignment
-  list_pool& operator=(list_pool&& src) {
+  list_pool& operator=(list_pool&& src) noexcept {
         std::cout<<"Move assignment... "<<std::endl;
         pool=std::move(src.pool);
         return *this;

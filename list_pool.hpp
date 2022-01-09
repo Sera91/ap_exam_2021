@@ -1,10 +1,12 @@
-/***
+/***********************************************************************************************************
+ * Library written by Serafina Di Gioia for the exam of the "Advanced Programming" course (A.Y. 2021-2022) *
+ ***********************************************************************************************************
  * In this project, we write a pool for fast linked lists. 
  * The pool stores each node in a `std::vector<node_t>`. 
  * The "address" of a node is `1+idx`, where `idx` is the index where the node is stored in the vector. 
  * This trick allows us to use address `0` as `end`, so we can use unsigned integers type. 
  * The first node stored in the vector will be put at `idx == 0`, but it will be referenced as `1`.
- ***/ 
+ *********************************************************************************************************/ 
 
 
 #pragma once

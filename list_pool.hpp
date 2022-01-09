@@ -181,7 +181,7 @@ class list_pool{
     return node(x).value;
   }
 
-  list_type& next(list_type x) {
+  list_type& next(list_type x) noexcept {
     return node(x).next;
   }
 

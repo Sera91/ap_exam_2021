@@ -113,8 +113,37 @@ class list_pool{
  public:
   // list_pool() {*this = list_pool(0);};
   list_pool() = default;
-  explicit list_pool(size_type n) { reserve(n); }; // reserve n nodes in the pool
+  explicit list_pool(size_type n): pool(0) { reserve(n); }; // reserve the space in memory for n nodes in the pool, leaving the size of the pool equal to 0
 
+
+  //Some constructors and operators useful to copy the vector pool, with all the linked lists inside:
+
+  //move constructor
+  list_pool(list_pool&& src) :pool{std::move(src.pool)}{
+        std::cout<<"Move constructor "<<std::endl;
+  }
+
+  //move assignment
+  list_pool& operator=(list_pool&& src) {
+        std::cout<<"Move assignment... "<<std::endl;
+        pool=std::move(src.pool);
+        return *this;
+  }
+
+  // copy constructor 
+  list_pool(const list_pool& src):pool{src.pool} {
+        std::cout<<"Copy constructor "<<std::endl;
+  }
+
+  // copy assignment 
+  list_pool& operator=(const list_pool& src) {
+        std::cout<<"Copy assignment... "<<std::endl;
+        pool.clear();
+        auto tmp=src;
+        (*this) = std::move(tmp);
+        return *this;
+  }
+    
 
   using iterator = _iterator<node_t, T, N>;
   using const_iterator = _iterator<node_t, const T, N>;
@@ -137,7 +166,7 @@ class list_pool{
   // reserve n nodes in the pool
   void reserve(size_type n){
     if (n > capacity() )
-       pool.reserve(2*n);
+       pool.reserve(n);
   }  
 
   bool is_empty(list_type x) const noexcept { return x == end();};
